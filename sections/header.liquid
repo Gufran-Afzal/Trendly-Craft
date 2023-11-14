@@ -1,0 +1,89 @@
+<div x-data="{ isOpen: false }" @keydown.escape="isOpen = false" class="bg-gray-800 text-white">
+    <div class="container mx-auto flex items-center justify-between p-4">
+        {% if shop.logo %}
+            <img id="shop_logo" src="{{ section.settings.shop_logo | img_url: 'master' }}" alt="{{ shop.name }}" />
+        {% else %}
+        <a href="#" id="shop_name" class="text-lg font-bold">{{ section.settings.shop_name }}</a>
+        {% endif %}
+
+        <div class="md:hidden">
+            <button @click="isOpen = !isOpen" class="text-gray-400 hover:text-gray-300 focus:outline-none">
+                {% render 'icon-bar' %}
+            </button>
+        </div>
+
+        <div class="hidden md:flex space-x-4">
+            <a href="#" class="hover:text-gray-300">Home</a>
+            <div x-data="{ isOpen: false }" class="relative" @click.away="isOpen = false">
+                <button @click="isOpen = !isOpen" class="flex items-center gap-1 hover:text-gray-300 focus:outline-none">
+                    Dropdown
+                {% render 'icon-chevron' %}
+                </button>
+                <div x-show="isOpen" class="absolute mt-2 bg-white text-gray-700 shadow-md rounded">
+                    <a href="#" class="block px-4 py-2">Dashboard</a>
+                    <a href="#" class="block px-4 py-2">Settings</a>
+                    <a href="#" class="block px-4 py-2">Earnings</a>
+                    <a href="#" class="block px-4 py-2">Sign out</a>
+                </div>
+            </div>
+            <a href="#" class="hover:text-gray-300">Services</a>
+            <a href="#" class="hover:text-gray-300">Pricing</a>
+            <a href="#" class="hover:text-gray-300">Contact</a>
+        </div>
+        <div class="hidden md:flex space-x-4">
+            <button class="fill-current text-white">
+                {% render 'icon-search' %}
+            </button>
+            <a class="fill-current text-white" href="{{ routes.cart_url }}">
+                {% render 'icon-cart' %}
+            </a>
+        </div>
+    </div>
+    <div x-show="isOpen" id="mobile-nav-links" class="md:hidden mt-4">
+        <a href="#" class="block py-2 px-4 border-t border-gray-700">Home</a>
+        <div x-data="{ isOpen: false }" class="relative py-2 px-4 border-t border-gray-700" @click.away="isOpen = false">
+            <button @click="isOpen = !isOpen" class="flex items-center gap-1">
+                Dropdown
+                {% render 'icon-chevron' %}
+            </button>
+            <div x-show="isOpen" class="absolute mt-2 bg-white text-gray-700 shadow-md rounded">
+                <a href="#" class="block px-4 py-2">Dashboard</a>
+                <a href="#" class="block px-4 py-2">Settings</a>
+                <a href="#" class="block px-4 py-2">Earnings</a>
+                <a href="#" class="block px-4 py-2">Sign out</a>
+            </div>
+        </div>
+        <a href="#" class="block py-2 px-4 border-t border-gray-700">Services</a>
+        <a href="#" class="block py-2 px-4 border-t border-gray-700">Pricing</a>
+        <a href="#" class="block py-2 px-4 border-t border-gray-700">Contact</a>
+        <div class="flex flex-row justify-between">
+            <button class="fill-current text-white">
+                {% render 'icon-search' %}
+            </button>
+            <a class="fill-current text-white" href="{{ routes.cart_url }}">
+                {% render 'icon-cart' %}
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "shop_logo",
+            "label": "Logo"
+            },
+            {
+            "type": "text",
+            "id": "shop_name",
+            "default": "Shop Name",
+            "label": "Shop Name"
+            }
+    ]
+}
+{% endschema %}
