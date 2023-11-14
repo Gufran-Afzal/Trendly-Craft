@@ -1,1 +1,0 @@
-# Trendly-Craft
